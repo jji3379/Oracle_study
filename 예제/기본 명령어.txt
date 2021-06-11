@@ -1,0 +1,27 @@
+############ CREATE  ############# : CREATE TABLE
+
+- CREATE TABLE member(
+num NUMBER PRIMARY KEY, name VARCHAR2(50), addr VARCHAR2(100)
+);
+
+############ ALTER  ############# : ALTER TABLE
+
+- 추가 ( ADD ) : ALTER TABLE member ADD(email VARCHAR2(20));
+- 수정 ( MODIFY ) : ALTER TABLE member MODIFY(email VARCHAR2(50));
+- 삭제 ( DROP COLUMN ) : ALTER TABLE member DROP COLUMN email;
+- 이름변경 ( RENAME COLUMN _ TO _) : ALTER TABLE member RENAME COLUMN addr TO address;
+
+############ INSERT  ############# : INSERT INTO
+
+- INSERT INTO member(num, name,addr) VALUES(1,'김구라','노량진');
+- INSERT INTO member(num, name) VALUES(2,'해골');
+- INSERT INTO member VALUES(3,'원숭이','상도동');
+
+############ DELETE  ############# : DELETE FROM
+
+- DELETE FROM member WHERE num=2;
+
+############ UPDATE  ############# : UPDATE _ SET
+
+- UPDATE member SET addr='동물원' where num=3;
+
