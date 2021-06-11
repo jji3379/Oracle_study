@@ -1,0 +1,81 @@
+########### JOIN ########### : 논리적인 결합
+
+########### JOIN 없이 WHERE 로 묶기 ###########
+
+1. where emp.deptno=deptno
+
+	=> select ename, EMP.DEPTNO, dname 
+	from EMP, DEPT
+	where EMP.DEPTNO=DEPT.DEPTNO;
+
+
+2. where절 AND 로 묶기
+
+	=> select ename, dname
+	from emp, dept
+	where emp.deptno=dept.deptno AND
+	sal BETWEEN 3000 AND 5000;
+
+
+3. 별칭 붙이기
+
+	=> select ename, hiredate, E.deptno, dname         (3 번)
+	from emp E, dept D                                 (1 번)
+	where E.deptno=D.deptno                            (2 번) 
+	and dname='ACCOUNTING';
+
+
+########### ANSI JOIN ########### : where 절에 조건만 쓸 수 있도록 해줌, JOIN 관련을 따로 선언해줌
+
+1. INNER JOIN _ ON _ 
+2. OUTER JOIN : 한쪽 테이블에 데이터가 존재하지 않을 때, 모든 데이터를 추출하는 방법
+		- where절 JOIN
+		- RIGHT OUTER JOIN (왼쪽 테이블에 비었을 경우)
+		- LEFT OUTER JOIN (오른쪽 테이블에 비었을 경우)
+3. USING : JOIN 조건의 칼럼명이 같을 때 사용
+4. SELF JOIN : 참조해야할 칼럼이 자신의 테이블에 있는 경우
+
+
+########### INNER JOIN ########### : INNER JOIN 테이블명 ON JOIN조건
+
+Ex1) 부서명이 'ACCOUNTING'인 사원의 이름, 입사일, 부서번호, 부서명을 출력
+	select ename, hiredate, emp.deptno, dname
+	from emp
+	INNER JOIN dept ON emp.deptno=dept.deptno
+	where dname='ACCOUNTING';
+
+별칭을 붙인 경우) 
+	select E.ename, E.hiredate, E.deptno, E.dname
+	from emp E
+	INNER JOIN dept D ON E.deptno=D.deptno
+	where D.dname='ACCOUNTING';	
+
+
+########### OUTER JOIN ###########
+
+Ex1) 사원번호, 부서번호, 부서명을 출력하세요. 단, 사원이 근무하지 않는 부서명도 같이 출력해보세요. (where 절 JOIN)
+	select e.empno, d.deptno, d.dname
+	from emp e, dept d
+	where e.deptno(+)=d.deptno;
+
+Ex2) RIGHT OUTER JOIN : 왼쪽 테이블에 비었을 경우
+	select e.ename, e.deptno, dname, e.sal
+	from emp e
+	RIGHT OUTER JOIN dept ON e.deptno=dept.deptno
+
+
+########### USING ########### : INNER JOIN 에서 ON 대신 USING 사용 (deptno 애매함이 사라짐)
+Ex1) 부서명이 'ACCOUNTING'인 사원의 이름, 입사일, 부서번호, 부서명을 출력
+	select ename, hiredate, DEPTNO, dname
+	from emp
+	INNER JOIN dept USING(deptno)
+	where dname='ACCOUNTING';
+*별칭 사용하는 경우 오류남!!!
+	
+
+
+########### SELF JOIN ###########
+Ex1) 각 사원의 이름과 매니저 이름 출력
+	select E1.ename, E2.ename
+	from EMP E1, EMP e2
+	where e1.mgr=e2.empno;
